@@ -67,8 +67,7 @@ if (result.isSuccess) {
   tokenId = result.token!.id;
   print('Token ID: ${result.token!.id}');
 } else {
-  print(
-      'SingleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
+  print('SingleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
 }
 ```
 
@@ -88,8 +87,7 @@ if (result.isSuccess) {
   tokenId = result.token!.id;
   print('Token ID: ${result.token!.id}');
 } else {
-  print(
-      'MultipleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
+  print('MultipleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
 }
 ```
 
@@ -101,8 +99,7 @@ AuthenticationResult result = await xendit.createAuthentication(tokenId, amount:
 if (result.isSuccess) {
   print('Authentication ID: ${result.authentication!.id}');
 } else {
-  print(
-      'Authentication Error: ${result.errorCode} - ${result.errorMessage}');
+  print('Authentication Error: ${result.errorCode} - ${result.errorMessage}');
 }
 ```
 
