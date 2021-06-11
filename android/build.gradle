@@ -1,0 +1,52 @@
+group 'com.xendit.fxendit'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile){
+        options.compilerArgs << "-Xlint:deprecation"
+        options.compilerArgs << "-Xlint:unchecked"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+        maven {
+            url "https://cardinalcommerce.bintray.com/android"
+            credentials {
+                username 'cards@cardinalcommerce'
+                password 'd2358b841891b65b0610f7d51361c13bf4915350'
+            }
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+}
+
+dependencies {
+    implementation 'com.xendit:xendit-android:3.2.2'
+    implementation 'org.jfrog.cardinalcommerce.gradle:cardinalmobilesdk:2.2.4-1'
+}

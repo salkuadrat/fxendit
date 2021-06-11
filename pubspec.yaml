@@ -1,0 +1,26 @@
+name: fxendit
+description: The easy way to use Xendit Development Kit in Flutter.
+version: 0.0.1
+# author: Salman S
+homepage: https://github.com/salkuadrat/fxendit
+repository: https://github.com/salkuadrat/fxendit
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.xendit.fxendit
+        pluginClass: FxenditPlugin
