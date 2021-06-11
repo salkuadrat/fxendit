@@ -24,12 +24,10 @@ class XCard {
         this.creditCardCVN = CardValidator.cleanCvn(creditCardCVN);
 
   /// Convert XCard to Map
-  Map<String, dynamic> to() {
-    return <String, dynamic>{
-      'creditCardNumber': creditCardNumber,
-      'creditCardCVN': creditCardCVN,
-      'expirationMonth': expirationMonth,
-      'expirationYear': expirationYear,
-    };
-  }
+  Map<String, dynamic> to() => <String, dynamic>{
+        'creditCardNumber': creditCardNumber,
+        'creditCardCVN': creditCardCVN,
+        'expirationMonth': expirationMonth,
+        'expirationYear': expirationYear,
+      };
 }

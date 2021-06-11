@@ -14,7 +14,7 @@ or
 
 ```yaml
 dependencies:
-  fxendit: ^0.0.1
+  fxendit: ^0.0.2
 ```
 
 Then run `flutter pub get`.
@@ -101,6 +101,49 @@ if (result.isSuccess) {
 } else {
   print('Authentication Error: ${result.errorCode} - ${result.errorMessage}');
 }
+```
+
+Check if a credit card number is valid.
+
+```dart
+String cardNumber = '4111111111111111';
+
+bool isValid = CardValidator.isCardNumberValid(cardNumber);
+```
+
+Check if credit card expiration month and year is valid.
+
+```dart
+String expirationMonth = '09';
+String expirationYear = '2021';
+
+bool isValid = CardValidator.isExpiryValid(expirationMonth, expirationYear);
+```
+
+Check if a card CVN is valid.
+
+```dart
+String cardCVN = '123';
+
+bool isValid = CardValidator.isCvnValid(cardCVN);
+```
+
+Get card type based on card number.
+
+```dart
+String cardNumber = '4111111111111111';
+
+CardType cardType = CardValidator.getCardType(cardNumber);
+print('${cardType.cardName} - ${cardType.cardKey}');
+```
+
+Check if the card CVN length is valid for its type.
+
+```dart
+String cardNumber = '4111111111111111';
+String cardCVN = '123';
+
+bool isValid = CardValidator.isCvnValidForCardType(cardCVN, cardNumber);
 ```
 
 ## Example
