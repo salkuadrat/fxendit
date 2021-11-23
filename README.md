@@ -14,13 +14,32 @@ $ flutter pub add fxendit
 
 [Get your public key](https://dashboard.xendit.co/settings/developers#api-keys).
 
-Set `minSdkVersion` in your gradle to 21. Then add XenditActivity to AndroidManifest.
+Set `minSdkVersion` in your gradle to 21. Then add related permissions and activities to AndroidManifest.
 
 ```xml
 <manifest...>
   ...
+
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
   <application...>
     ...
+
+    <activity
+      android:name="com.xendit.example.CreateTokenActivity"
+      android:theme="@style/NormalTheme"/>
+
+    <activity
+      android:name="com.xendit.example.AuthenticationActivity"
+      android:theme="@style/NormalTheme"/>
+
+    <activity
+      android:name="com.xendit.example.ValidationUtilActivity"
+      android:theme="@style/NormalTheme"/>
+
     <activity android:name="com.xendit.XenditActivity"/>
     ...
   </application>
