@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.0.3'
     }
 }
 
@@ -27,10 +27,10 @@ rootProject.allprojects {
         jcenter()
         mavenLocal()
         maven {
-            url "https://cardinalcommerce.bintray.com/android"
+        url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
             credentials {
-                username 'cards@cardinalcommerce'
-                password 'd2358b841891b65b0610f7d51361c13bf4915350'
+                username 'cybersource_xendit_payfac_cards'
+                password 'AKCp8k7kDxqgxY63sahozmx9h2wLR8QikWwSPnQyZZxy63juWsQJ8PevpWY6s3eREW4rrzTyj'
             }
         }
     }
@@ -47,6 +47,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.xendit:xendit-android:3.2.2'
+    implementation 'com.xendit:xendit-android:3.6.1'
     implementation 'org.jfrog.cardinalcommerce.gradle:cardinalmobilesdk:2.2.4-1'
 }

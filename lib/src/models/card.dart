@@ -19,8 +19,7 @@ class XCard {
     required String creditCardCVN,
     required this.expirationMonth,
     required this.expirationYear,
-  })   : this.creditCardNumber =
-            CardValidator.cleanCardNumber(creditCardNumber),
+  })  : this.creditCardNumber = CardValidator.cleanCardNumber(creditCardNumber),
         this.creditCardCVN = CardValidator.cleanCvn(creditCardCVN);
 
   /// Convert XCard to Map
