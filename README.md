@@ -6,18 +6,9 @@ Using Xendit in Flutter.
 
 Add dependency to your project.
 
-```
+```bash
 $ flutter pub add fxendit
 ```
-
-or
-
-```yaml
-dependencies:
-  fxendit: ^0.0.2
-```
-
-Then run `flutter pub get`.
 
 ## Usage
 
