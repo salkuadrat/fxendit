@@ -94,7 +94,7 @@ public class FxenditPlugin implements FlutterPlugin, MethodCallHandler, Activity
 
                     @Override
                     public void onError(XenditError error) {
-                        result.error(error.getErrorCode(), error.getErrorMessage(), error);
+                        result.error(error.getErrorCode(), error.getErrorMessage(), null);
                     }
                 });
         }
@@ -119,7 +119,7 @@ public class FxenditPlugin implements FlutterPlugin, MethodCallHandler, Activity
 
                 @Override
                 public void onError(XenditError error) {
-                    result.error(error.getErrorCode(), error.getErrorMessage(), error);
+                    result.error(error.getErrorCode(), error.getErrorMessage(), null);
                 }
             });
         }
@@ -147,7 +147,7 @@ public class FxenditPlugin implements FlutterPlugin, MethodCallHandler, Activity
 
             @Override
             public void onError(XenditError error) {
-                result.error(error.getErrorCode(), error.getErrorMessage(), error);
+                result.error(error.getErrorCode(), error.getErrorMessage(), null);
             }
         });
     }
