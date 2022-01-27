@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fxendit/fxendit.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -43,9 +45,9 @@ class _MyAppState extends State<MyApp> {
 
     if (result.isSuccess) {
       tokenId = result.token!.id;
-      print('Token ID: ${result.token!.id}');
+      debugPrint('Token ID: ${result.token!.id}');
     } else {
-      print(
+      debugPrint(
           'SingleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
     }
   }
@@ -62,9 +64,9 @@ class _MyAppState extends State<MyApp> {
 
     if (result.isSuccess) {
       tokenId = result.token!.id;
-      print('Token ID: ${result.token!.id}');
+      debugPrint('Token ID: ${result.token!.id}');
     } else {
-      print(
+      debugPrint(
           'MultipleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
     }
   }
@@ -75,9 +77,9 @@ class _MyAppState extends State<MyApp> {
           await xendit.createAuthentication(tokenId, amount: 50000);
 
       if (result.isSuccess) {
-        print('Authentication ID: ${result.authentication!.id}');
+        debugPrint('Authentication ID: ${result.authentication!.id}');
       } else {
-        print(
+        debugPrint(
             'Authentication Error: ${result.errorCode} - ${result.errorMessage}');
       }
     }
@@ -91,7 +93,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('FXendit Example'),
         ),
-        body: Center(
+        body: const Center(
           child: Text(''),
         ),
       ),
