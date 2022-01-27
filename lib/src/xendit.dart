@@ -10,7 +10,7 @@ import 'results/token_result.dart';
 
 /// Class to use Xendit functionality in Flutter
 class Xendit {
-  final MethodChannel _channel = MethodChannel('fxendit');
+  final MethodChannel _channel = const MethodChannel('fxendit');
 
   /// Xendit publishedKey
   /// https://dashboard.xendit.co/settings/developers#api-keys

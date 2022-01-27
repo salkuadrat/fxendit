@@ -1,14 +1,24 @@
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 /// List of Card Types
+// ignore: constant_identifier_names
 const CardType VISA = CardType("VISA", "001");
+// ignore: constant_identifier_names
 const CardType MASTERCARD = CardType("MASTERCARD", "002");
+// ignore: constant_identifier_names
 const CardType AMEX = CardType("AMEX", "003");
+// ignore: constant_identifier_names
 const CardType DISCOVER = CardType("DISCOVER", "004");
+// ignore: constant_identifier_names
 const CardType JCB = CardType("JCB", "007");
+// ignore: constant_identifier_names
 const CardType VISA_ELECTRON = CardType("VISA_ELECTRON", "033");
+// ignore: constant_identifier_names
 const CardType DANKORT = CardType("DANKORT", "034");
+// ignore: constant_identifier_names
 const CardType MAESTRO = CardType("MAESTRO", "042");
+// ignore: constant_identifier_names
 const CardType OTHER = CardType("OTHER", null);
 
 /// Card Type Object
@@ -261,7 +271,7 @@ class CardValidator {
       try {
         number = int.parse(str);
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
     }
 

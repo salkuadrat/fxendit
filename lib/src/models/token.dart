@@ -49,19 +49,19 @@ class Token {
         cardInfo = CardInfo.from(json['cardInfo']);
 
   /// Convert AuthenticatedToken to Token
-  Token.fromAuthenticatedToken(AuthenticatedToken authentication,
+  Token.fromAuthenticatedToken(AuthenticatedToken _authentication,
       {ThreeDSRecommendation? tds})
-      : id = authentication.id,
-        status = authentication.status,
-        authenticationId = authentication.authenticationId,
-        authentication = authentication,
-        maskedCardNumber = authentication.maskedCardNumber,
-        cardInfo = authentication.cardInfo,
+      : id = _authentication.id,
+        status = _authentication.status,
+        authenticationId = _authentication.authenticationId,
+        authentication = _authentication,
+        maskedCardNumber = _authentication.maskedCardNumber,
+        cardInfo = _authentication.cardInfo,
         should3ds = tds != null ? tds.should3ds : true;
 
   /// Convert Authentication to Token
   Token.fromAuthentication(Authentication authentication, {String? tokenId})
-      : id = tokenId != null ? tokenId : authentication.creditCardTokenId,
+      : id = tokenId ?? authentication.creditCardTokenId,
         status = authentication.status,
         authentication = null,
         authenticationId = authentication.id,
