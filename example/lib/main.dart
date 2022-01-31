@@ -14,17 +14,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // Use your own key from https://dashboard.xendit.co/settings/developers#api-keys
+  // TODO: CHANGE THIS
   Xendit xendit = Xendit(
-      'xnd_public_development_RGUHB7gkrX2QTfeWMMCZhoUMAoVBmEadosxVOGfCCIX92kdCacGBoDlrjldsm7');
+      'xnd_public_production_BBMqUZL82pRK6HSTtDD9xhWpSL5D9sXuOcaJ7qTwOpBP7KCISlsuZ5WBfRYtQrN9');
   String tokenId = '';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      await _testSingleUseToken();
-      await _testMultipleUseToken();
-      await _testAuthentication();
+      // await _testSingleUseToken();
+      // await _testMultipleUseToken();
+      // await _testAuthentication();
     });
   }
 
@@ -94,7 +95,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('FXendit Example'),
         ),
         body: const Center(
-          child: Text(''),
+          child: Text('Fxendit'),
         ),
       ),
     );

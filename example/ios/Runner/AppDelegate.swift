@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import Xendit
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
