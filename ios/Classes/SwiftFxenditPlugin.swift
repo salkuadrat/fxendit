@@ -26,27 +26,28 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
     
     private func createSingleToken(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if let myArgs = call.arguments as? [String: Any],
-           let publishableKey = myArgs["publishableKey"] as? String,
+           let publishableKey = myArgs["publishedKey"] as? String,
            let currency = myArgs["currency"] as? String,
            let amount = myArgs["amount"] as? Int,
            let onBehalfOf = myArgs["onBehalfOf"] as? String,
            let flutterAppDelegate = UIApplication.shared.delegate as? FlutterAppDelegate {
-          initXendit(publishedKey: publishableKey)
-          let creditCard = cardForm(call)
-            if creditCard != nil {
-                let tokenizationRequest = XenditTokenizationRequest.init(cardData: creditCard!, isSingleUse: true, shouldAuthenticate: true, amount: NSNumber.init(value: amount), currency: currency)
-                Xendit.createToken(fromViewController: flutterAppDelegate.window.rootViewController!, tokenizationRequest: tokenizationRequest, onBehalfOf: onBehalfOf) {(token, error) in
-                    if let token = token {
-                        result(self.tokenToMap(token: token))
-                    } else {
-                        result(FlutterError(code: "-1", message: "Failed create token", details: error))
-                    }
-                }
-            } else {
-                result(FlutterError(code: "-1", message: "Failed create credit card", details: nil))
+           initXendit(publishedKey: publishableKey)
+           let creditCard = cardForm(call)
+           let tokenizationRequest = XenditTokenizationRequest.init(cardData: creditCard!, isSingleUse: true, shouldAuthenticate: true, amount: NSNumber.init(value: amount), currency: currency)
+
+            
+            var json: [String: Any] = [:]
+            Xendit.createToken(fromViewController: flutterAppDelegate.window.rootViewController!, tokenizationRequest: tokenizationRequest, onBehalfOf: onBehalfOf) { (token, error) in
+                if let token = token {
+                    json = self.tokenToMap(token: token)
+                    print(json)
+                    result(json)
+                } else {
+                    result(FlutterError(code: "-1", message: "Failed get token", details: error!.message))
+               }
             }
         } else {
-            result(FlutterError(code: "-1", message: "Failed get arguments publishableKey", details: nil))
+            result(FlutterError(code: "-1", message: "Failed get arguments publishableKey", details: call.arguments))
         }
          
     }
@@ -68,14 +69,15 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
     
     private func tokenToMap(token : XenditCCToken) -> [String: Any] {
         var json: [String: Any] = [:]
+        json["dum"] = "DUMMM"
         if token.id != nil { json["id"] = token.id }
         if token.status != nil { json["status"] = token.status }
-        if token.authenticationId != nil { json["authentication_id"] = token.authenticationId }
-        if token.authenticationURL != nil { json["authentication_urL"] = token.authenticationURL }
-        if token.maskedCardNumber != nil { json["masked_card_number"] = token.maskedCardNumber }
-        if token.should3DS != nil { json["should_3ds"] = token.should3DS }
-        if token.cardInfo != nil { json["card_info"] = cardInfoToMap(cardInfo: token.cardInfo!)}
-        if token.failureReason != nil { json["failure_reason"] = token.failureReason }
+        if token.authenticationId != nil { json["authenticationId"] = token.authenticationId }
+        if token.authenticationURL != nil { json["authenticatedToken"] = token.authenticationURL }
+        if token.maskedCardNumber != nil { json["maskedCardNumber"] = token.maskedCardNumber }
+        if token.should3DS != nil { json["should3ds"] = token.should3DS }
+        if token.cardInfo != nil { json["cardInfo"] = cardInfoToMap(cardInfo: token.cardInfo!)}
+        if token.failureReason != nil { json["failureReason"] = token.failureReason }
         return json
     }
     
@@ -87,7 +89,7 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
         if cardInfo.country != nil { json["country"] = cardInfo.country }
         if cardInfo.type != nil { json["type"] = cardInfo.type }
         if cardInfo.brand != nil { json["brand"] = cardInfo.brand }
-        if cardInfo.cardArtUrl != nil { json["card_art_url"] = cardInfo.cardArtUrl }
+        if cardInfo.cardArtUrl != nil { json["cardArtUrl"] = cardInfo.cardArtUrl }
         if cardInfo.fingerprint != nil { json["fingerprint"] = cardInfo.fingerprint }
         return json
     }

@@ -37,20 +37,13 @@ class _MyAppState extends State<MyApp> {
       expirationYear: '2021',
     );
 
-    TokenResult result = await xendit.createSingleUseToken(
+    await xendit.fakeCreateSingleUseToken(
       card,
       amount: 75000,
       shouldAuthenticate: true,
       onBehalfOf: '',
+      currency: 'IDR',
     );
-
-    if (result.isSuccess) {
-      tokenId = result.token!.id;
-      debugPrint('Token ID: ${result.token!.id}');
-    } else {
-      debugPrint(
-          'SingleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
-    }
   }
 
   Future _testMultipleUseToken() async {
@@ -94,8 +87,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('FXendit Example'),
         ),
-        body: const Center(
-          child: Text('Fxendit'),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              _testSingleUseToken();
+            },
+            child: const Text("Test Create Single Token"),
+          ),
         ),
       ),
     );

@@ -35,11 +35,11 @@ class Xendit {
   Future<TokenResult> createSingleUseToken(
     XCard card, {
     required int amount,
+    required String currency,
     bool shouldAuthenticate = true,
     String onBehalfOf = '',
     BillingDetails? billingDetails,
     Customer? customer,
-    String? currency,
   }) async {
     var params = <String, dynamic>{
       'publishedKey': publishedKey,
@@ -70,6 +70,41 @@ class Xendit {
         errorMessage: e.message ?? '',
       );
     }
+  }
+
+  Future<void> fakeCreateSingleUseToken(
+    XCard card, {
+    required int amount,
+    required String currency,
+    bool shouldAuthenticate = true,
+    String onBehalfOf = '',
+    BillingDetails? billingDetails,
+    Customer? customer,
+  }) async {
+    var params = <String, dynamic>{
+      'publishedKey': publishedKey,
+      'card': card.to(),
+      'amount': amount,
+      'shouldAuthenticate': shouldAuthenticate,
+      'onBehalfOf': onBehalfOf,
+    };
+
+    if (billingDetails != null) {
+      params['billingDetails'] = billingDetails.to();
+    }
+
+    if (customer != null) {
+      params['customer'] = customer.to();
+    }
+
+    if (currency != null) {
+      params['currency'] = currency;
+    }
+
+    var result = await _channel.invokeMethod('createSingleToken', params);
+
+    print(result);
+    return result;
   }
 
   /// Creates a multiple-use token.
