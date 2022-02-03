@@ -6,7 +6,7 @@ import 'card_info.dart';
 /// Token
 class Token {
   /// Token ID
-  final String id;
+  final String? id;
 
   /// Status
   final String status;
@@ -18,10 +18,10 @@ class Token {
   final AuthenticatedToken? authentication;
 
   /// Masked Card Number
-  final String maskedCardNumber;
+  final String? maskedCardNumber;
 
   /// Should 3DS
-  final bool should3ds;
+  final bool? should3ds;
 
   /// Card Info
   final CardInfo? cardInfo;
@@ -29,24 +29,29 @@ class Token {
   Token({
     required this.id,
     required this.status,
-    this.authenticationId,
+    required this.authenticationId,
     this.authentication,
-    required this.maskedCardNumber,
-    required this.should3ds,
-    required this.cardInfo,
+    this.maskedCardNumber,
+    this.should3ds,
+    this.cardInfo,
   });
 
   /// Convert Map to Token
-  Token.from(Map json)
-      : id = json['id'],
-        status = json['status'],
-        authenticationId = json['authenticationId'],
-        authentication = json['authenticatedToken'] != null
+  factory Token.from(Map json) => Token(
+        id: json['id'],
+        status: json['status'],
+        authenticationId: json['authenticationId'],
+        authentication: json['authenticatedToken'] != null
             ? AuthenticatedToken.from(json['authenticatedToken'])
             : null,
-        maskedCardNumber = json['maskedCardNumber'],
-        should3ds = json['should3ds'] as bool,
-        cardInfo = CardInfo.from(json['cardInfo']);
+        maskedCardNumber: json['maskedCardNumber'],
+        should3ds: json['should3ds'],
+        cardInfo: json['cardInfo'] != null
+            ? CardInfo.from(
+                json['cardInfo'],
+              )
+            : null,
+      );
 
   /// Convert AuthenticatedToken to Token
   Token.fromAuthenticatedToken(AuthenticatedToken _authentication,

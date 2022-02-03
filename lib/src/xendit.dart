@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'models/authentication.dart';
@@ -8,10 +9,10 @@ import 'models/token.dart';
 import 'results/authentication_result.dart';
 import 'results/token_result.dart';
 
+const MethodChannel _channel = MethodChannel('fxendit');
+
 /// Class to use Xendit functionality in Flutter
 class Xendit {
-  final MethodChannel _channel = const MethodChannel('fxendit');
-
   /// Xendit publishedKey
   /// https://dashboard.xendit.co/settings/developers#api-keys
   final String publishedKey;
@@ -59,7 +60,8 @@ class Xendit {
     }
 
     try {
-      var result = await _channel.invokeMethod('createSingleToken', params);
+      final result = await _channel.invokeMethod('createSingleToken', params);
+
       return TokenResult(token: Token.from(result));
     } on PlatformException catch (e) {
       return TokenResult(
@@ -97,7 +99,7 @@ class Xendit {
 
     var result = await _channel.invokeMethod('createSingleToken', params);
 
-    print(result);
+    debugPrint(result.toString());
     return result;
   }
 
@@ -110,6 +112,9 @@ class Xendit {
   /// @param customer Customer linked to the payment method
   Future<TokenResult> createMultipleUseToken(
     XCard card, {
+    required int amount,
+    String currency = 'IDR',
+    bool shouldAuthenticate = true,
     String onBehalfOf = '',
     BillingDetails? billingDetails,
     Customer? customer,
@@ -117,7 +122,10 @@ class Xendit {
     var params = <String, dynamic>{
       'publishedKey': publishedKey,
       'card': card.to(),
+      'amount': amount,
+      'shouldAuthenticate': shouldAuthenticate,
       'onBehalfOf': onBehalfOf,
+      'currency': currency,
     };
 
     if (billingDetails != null) {
@@ -137,6 +145,35 @@ class Xendit {
         errorMessage: e.message ?? '',
       );
     }
+  }
+
+  Future<void> fakeCreateMultipleUseToken(
+    XCard card, {
+    required int amount,
+    String currency = 'IDR',
+    bool shouldAuthenticate = true,
+    String onBehalfOf = '',
+    BillingDetails? billingDetails,
+    Customer? customer,
+  }) async {
+    var params = <String, dynamic>{
+      'publishedKey': publishedKey,
+      'card': card.to(),
+      'amount': amount,
+      'shouldAuthenticate': shouldAuthenticate,
+      'onBehalfOf': onBehalfOf,
+      'currency': currency,
+    };
+
+    if (billingDetails != null) {
+      params['billingDetails'] = billingDetails.to();
+    }
+
+    if (customer != null) {
+      params['customer'] = customer.to();
+    }
+    final result = await _channel.invokeMethod('createMultiToken', params);
+    debugPrint(result.toString());
   }
 
   /// Creates a 3DS authentication for a multiple-use token
@@ -162,6 +199,7 @@ class Xendit {
 
     try {
       var result = await _channel.invokeMethod('createAuthentication', params);
+
       return AuthenticationResult(authentication: Authentication.from(result));
     } on PlatformException catch (e) {
       return AuthenticationResult(
@@ -186,6 +224,6 @@ class Xendit {
     };
 
     final result = await _channel.invokeMethod('createAuthentication', params);
-    print(result);
+    debugPrint(result.toString());
   }
 }

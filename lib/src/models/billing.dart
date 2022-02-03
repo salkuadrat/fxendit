@@ -30,13 +30,16 @@ class BillingDetails {
   });
 
   /// Convert Map to BillingDetails
-  BillingDetails.from(Map json)
-      : givenNames = json['givenNames'],
-        surname = json['surname'],
-        email = json['email'],
-        mobileNumber = json['mobileNumber'],
-        phoneNumber = json['phoneNumber'],
-        address = Address.from(json['address']);
+  factory BillingDetails.from(Map json) => BillingDetails(
+        givenNames: json['givenNames'],
+        surname: json['surname'],
+        email: json['email'],
+        mobileNumber: json['mobileNumber'],
+        phoneNumber: json['phoneNumber'],
+        address: Address.from(
+          json['address'],
+        ),
+      );
 
   /// Convert BillingDetails to Map
   Map<String, dynamic> to() {

@@ -12,11 +12,15 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
       case "createSingleToken":
-        createSingleToken(call, result: result)
+        createSingleOrMultiUseToken(call, result: result, isSingleUse: true)
         break;
+      case "createMultiToken":
+        createSingleOrMultiUseToken(call, result: result, isSingleUse: false)
+      break;
       case "createAuthentication":
         createAuthentication(call, result: result)
         break;
+      
       default:
           result(FlutterMethodNotImplemented);
           break;
@@ -27,17 +31,17 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
         Xendit.publishableKey = publishedKey;
     }
     
-    private func createSingleToken(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-     
+    private func createSingleOrMultiUseToken(_ call: FlutterMethodCall, result: @escaping FlutterResult, isSingleUse : Bool) {
         if let myArgs = call.arguments as? [String: Any],
            let publishableKey = myArgs["publishedKey"] as? String,
            let currency = myArgs["currency"] as? String,
            let amount = myArgs["amount"] as? Int,
            let onBehalfOf = myArgs["onBehalfOf"] as? String,
+           let shouldAuthenticate = myArgs["shouldAuthenticate"] as? Bool,
            let flutterAppDelegate = UIApplication.shared.delegate as? FlutterAppDelegate {
            initXendit(publishedKey: publishableKey)
             if  let creditCard = cardForm(call) {
-                let tokenizationRequest = XenditTokenizationRequest.init(cardData: creditCard, isSingleUse: true, shouldAuthenticate: true, amount: NSNumber.init(value: amount), currency: currency)
+                let tokenizationRequest = XenditTokenizationRequest.init(cardData: creditCard, isSingleUse: isSingleUse, shouldAuthenticate: shouldAuthenticate, amount: NSNumber.init(value: amount), currency: currency)
                  Xendit.createToken(fromViewController: flutterAppDelegate.window.rootViewController!, tokenizationRequest: tokenizationRequest, onBehalfOf: onBehalfOf) { (token, error) in
                      if let token = token {
                          result(self.tokenToMap(token: token))
@@ -51,7 +55,6 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
         } else {
             result(FlutterError(code: "-1", message: "Failed get arguments publishableKey", details: call.arguments))
         }
-         
     }
     
     private func createAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -109,7 +112,8 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
     
     
     
-    private func cardInfoToMap(cardInfo : XenditCardMetadata) -> [String: Any] {
+    private func cardInfoToMap(cardInfo : XenditCardMetadata) -> [String: Any]? {
+       
         var json: [String: Any] = [:]
         if cardInfo.bank != nil { json["bank"] = cardInfo.bank }
         if cardInfo.country != nil { json["country"] = cardInfo.country }
@@ -117,7 +121,11 @@ public class SwiftFxenditPlugin: NSObject, FlutterPlugin {
         if cardInfo.brand != nil { json["brand"] = cardInfo.brand }
         if cardInfo.cardArtUrl != nil { json["cardArtUrl"] = cardInfo.cardArtUrl }
         if cardInfo.fingerprint != nil { json["fingerprint"] = cardInfo.fingerprint }
-        return json
+        if (json.isEmpty) {
+            return nil
+        } else {
+            return json
+        }
     }
     
     private func authenticationToMap(authentication : XenditAuthentication) -> [String : Any] {

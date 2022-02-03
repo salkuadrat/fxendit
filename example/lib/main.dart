@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   // Use your own key from https://dashboard.xendit.co/settings/developers#api-keys
   // TODO: CHANGE THIS
   Xendit xendit = Xendit(key);
-  String tokenId = '';
+  String? tokenId;
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       expirationYear: '2022',
     );
 
-    await xendit.fakeCreateSingleUseToken(
+    await xendit.createSingleUseToken(
       card,
       amount: 75000,
       shouldAuthenticate: true,
@@ -54,29 +54,12 @@ class _MyAppState extends State<MyApp> {
       expirationYear: '2022',
     );
 
-    TokenResult result = await xendit.createMultipleUseToken(card);
-
-    if (result.isSuccess) {
-      tokenId = result.token!.id;
-      debugPrint('Token ID: ${result.token!.id}');
-    } else {
-      debugPrint(
-          'MultipleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
-    }
+    await xendit.fakeCreateMultipleUseToken(card, amount: 50000);
   }
 
   Future<void> _testAuthentication() async {
-    if (tokenId.isNotEmpty) {
-      AuthenticationResult result =
-          await xendit.createAuthentication(tokenId, amount: 50000);
-
-      if (result.isSuccess) {
-        debugPrint('Authentication ID: ${result.authentication!.id}');
-      } else {
-        debugPrint(
-            'Authentication Error: ${result.errorCode} - ${result.errorMessage}');
-      }
-    }
+    await xendit.createAuthentication('61fb88b4c950ac001a9c6015',
+        amount: 50000);
   }
 
   @override
@@ -88,11 +71,38 @@ class _MyAppState extends State<MyApp> {
           title: const Text('FXendit Example'),
         ),
         body: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              _testSingleUseToken();
-            },
-            child: const Text("Test Create Single Token"),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _testSingleUseToken();
+                  },
+                  child: const Text("Test  Single Use Token"),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.lightBlue),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  _testMultipleUseToken();
+                },
+                child: const Text("Test  Multiple Use Token"),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  _testAuthentication();
+                },
+                child: const Text("Test Create Authentication"),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red)),
+              ),
+            ],
           ),
         ),
       ),
