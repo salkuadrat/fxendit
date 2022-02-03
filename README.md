@@ -14,8 +14,8 @@ $ flutter pub add fxendit
 
 [Get your public key](https://dashboard.xendit.co/settings/developers#api-keys).
 
+### Android
 Set `minSdkVersion` in your gradle to 21. Then add related permissions and activities to AndroidManifest.
-
 ```xml
 <manifest...>
   ...
@@ -46,6 +46,12 @@ Set `minSdkVersion` in your gradle to 21. Then add related permissions and activ
 </manifest>
 ```
 
+### iOS
+set target min to iOS 10.0 or higher in ios/PodFile
+```pods 
+  platform :ios, '10.0'
+```
+
 Initialize Xendit:
 
 ```dart
@@ -63,7 +69,7 @@ XCard card = XCard(
   creditCardNumber: '4111111111111111',
   creditCardCVN: '123',
   expirationMonth: '09',
-  expirationYear: '2021',
+  expirationYear: '2022',
 );
 
 TokenResult result = await xendit.createSingleUseToken(
@@ -88,7 +94,7 @@ XCard card = XCard(
   creditCardNumber: '4111111111111111',
   creditCardCVN: '123',
   expirationMonth: '09',
-  expirationYear: '2021',
+  expirationYear: '2022',
 );
 
 TokenResult result = await xendit.createMultipleUseToken(card);
@@ -125,7 +131,7 @@ Check if credit card expiration month and year is valid.
 
 ```dart
 String expirationMonth = '09';
-String expirationYear = '2021';
+String expirationYear = '2022';
 
 bool isValid = CardValidator.isExpiryValid(expirationMonth, expirationYear);
 ```
