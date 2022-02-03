@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fxendit/fxendit.dart';
+import 'package:fxendit_example/key/key.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +16,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // Use your own key from https://dashboard.xendit.co/settings/developers#api-keys
   // TODO: CHANGE THIS
-  Xendit xendit = Xendit(
-      'xnd_public_production_BBMqUZL82pRK6HSTtDD9xhWpSL5D9sXuOcaJ7qTwOpBP7KCISlsuZ5WBfRYtQrN9');
+  Xendit xendit = Xendit(key);
   String tokenId = '';
 
   @override
