@@ -38,7 +38,7 @@ class Customer {
   /// Address List
   final List<Address> addresses;
 
-  Customer({
+  const Customer({
     required this.id,
     required this.referenceId,
     required this.email,
@@ -54,21 +54,21 @@ class Customer {
   });
 
   /// Convert Map to Customer
-  Customer.from(Map json)
-      : id = json['id'],
-        referenceId = json['referenceId'],
-        email = json['email'],
-        givenNames = json['givenNames'],
-        surname = json['surname'],
-        description = json['description'],
-        mobileNumber = json['mobileNumber'],
-        phoneNumber = json['phoneNumber'],
-        nationality = json['nationality'],
-        dateOfBirth = json['dateOfBirth'],
-        cardInfo = json['cardInfo'],
-        addresses = (json['addresses'] as List)
-            .map((item) => Address.from(item))
-            .toList();
+  factory Customer.from(Map json) => Customer(
+      id: json['id'],
+      referenceId: json['referenceId'],
+      email: json['email'],
+      givenNames: json['givenNames'],
+      surname: json['surname'],
+      description: json['description'],
+      mobileNumber: json['mobileNumber'],
+      phoneNumber: json['phoneNumber'],
+      nationality: json['nationality'],
+      dateOfBirth: json['dateOfBirth'],
+      cardInfo: json['cardInfo'],
+      addresses: (json['addresses'] as List)
+          .map((item) => Address.from(item))
+          .toList());
 
   /// Convert Customer to Map
   Map<String, dynamic> to() {

@@ -20,7 +20,7 @@ class BillingDetails {
   /// Address
   final Address address;
 
-  BillingDetails({
+  const BillingDetails({
     required this.givenNames,
     required this.surname,
     required this.email,

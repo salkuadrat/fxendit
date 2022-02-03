@@ -26,7 +26,7 @@ class Token {
   /// Card Info
   final CardInfo? cardInfo;
 
-  Token({
+  const Token({
     required this.id,
     required this.status,
     required this.authenticationId,

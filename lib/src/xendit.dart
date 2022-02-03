@@ -126,7 +126,7 @@ class Xendit {
     String currency = 'IDR',
     String? creditCardCVN,
   }) async {
-    var params = <String, dynamic>{
+    final params = <String, dynamic>{
       'publishedKey': publishedKey,
       'tokenId': tokenId,
       'amount': amount,
@@ -135,7 +135,8 @@ class Xendit {
     };
 
     try {
-      var result = await _channel.invokeMethod('createAuthentication', params);
+      final result =
+          await _channel.invokeMethod('createAuthentication', params);
 
       return AuthenticationResult(authentication: Authentication.from(result));
     } on PlatformException catch (e) {

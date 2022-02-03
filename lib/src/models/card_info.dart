@@ -18,7 +18,7 @@ class CardInfo {
   /// Card Fingerprint
   final String? fingerprint;
 
-  CardInfo({
+  const CardInfo({
     required this.bank,
     required this.country,
     required this.type,
@@ -28,11 +28,12 @@ class CardInfo {
   });
 
   /// Convert Map to CardInfo
-  CardInfo.from(Map json)
-      : bank = json['bank'],
-        country = json['country'],
-        type = json['type'],
-        brand = json['brand'],
-        cardArtUrl = json['cardArtUrl'],
-        fingerprint = json['fingerprint'];
+  factory CardInfo.from(Map json) => CardInfo(
+        bank: json['bank'],
+        country: json['country'],
+        type: json['type'],
+        brand: json['brand'],
+        cardArtUrl: json['cardArtUrl'],
+        fingerprint: json['fingerprint'],
+      );
 }
