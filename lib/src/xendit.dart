@@ -35,7 +35,7 @@ class Xendit {
   Future<TokenResult> createSingleUseToken(
     XCard card, {
     required int amount,
-    required String currency,
+    String currency = 'IDR',
     bool shouldAuthenticate = true,
     String onBehalfOf = '',
     BillingDetails? billingDetails,

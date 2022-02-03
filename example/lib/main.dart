@@ -26,13 +26,14 @@ class _MyAppState extends State<MyApp> {
       expirationYear: '2022',
     );
 
-    await xendit.createSingleUseToken(
-      card,
-      amount: 75000,
-      shouldAuthenticate: true,
-      onBehalfOf: '',
-      currency: 'IDR',
-    );
+    final result = await xendit.createSingleUseToken(card, amount: 50000);
+    if (result.isSuccess) {
+      tokenId = result.token?.id;
+      debugPrint('Token ID: ${result.token!.id}');
+    } else {
+      debugPrint(
+          'SingleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
+    }
   }
 
   Future<void> _testMultipleUseToken() async {
@@ -43,12 +44,23 @@ class _MyAppState extends State<MyApp> {
       expirationYear: '2022',
     );
 
-    await xendit.createMultipleUseToken(card, amount: 50000);
+    final result = await xendit.createMultipleUseToken(card, amount: 50000);
+    if (result.isSuccess) {
+      tokenId = result.token?.id;
+      debugPrint('Token ID: ${result.token!.id}');
+    } else {
+      debugPrint(
+          'MultipleUseToken Error: ${result.errorCode} - ${result.errorMessage}');
+    }
   }
 
   Future<void> _testAuthentication() async {
-    await xendit.createAuthentication('61fba9e59f83eb00193a8c8f',
-        amount: 50000);
+    if (tokenId != null) {
+      final results = await xendit
+          .createAuthentication('61fba9e59f83eb00193a8c8f', amount: 50000);
+
+      debugPrint(results.isSuccess.toString());
+    }
   }
 
   @override
