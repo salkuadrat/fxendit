@@ -15,19 +15,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // Use your own key from https://dashboard.xendit.co/settings/developers#api-keys
-  // TODO: CHANGE THIS
   Xendit xendit = Xendit(key);
   String? tokenId;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      // await _testSingleUseToken();
-      // await _testMultipleUseToken();
-      // await _testAuthentication();
-    });
-  }
 
   Future<void> _testSingleUseToken() async {
     XCard card = XCard(
@@ -54,11 +43,11 @@ class _MyAppState extends State<MyApp> {
       expirationYear: '2022',
     );
 
-    await xendit.fakeCreateMultipleUseToken(card, amount: 50000);
+    await xendit.createMultipleUseToken(card, amount: 50000);
   }
 
   Future<void> _testAuthentication() async {
-    await xendit.createAuthentication('61fb88b4c950ac001a9c6015',
+    await xendit.createAuthentication('61fba9e59f83eb00193a8c8f',
         amount: 50000);
   }
 
@@ -77,6 +66,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 child: ElevatedButton(
                   onPressed: () {
+                    debugPrint("Tapped");
                     _testSingleUseToken();
                   },
                   child: const Text("Test  Single Use Token"),
@@ -89,6 +79,7 @@ class _MyAppState extends State<MyApp> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
+                  debugPrint("Tapped");
                   _testMultipleUseToken();
                 },
                 child: const Text("Test  Multiple Use Token"),
@@ -96,6 +87,7 @@ class _MyAppState extends State<MyApp> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
+                  debugPrint("Tapped");
                   _testAuthentication();
                 },
                 child: const Text("Test Create Authentication"),

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'models/authentication.dart';
@@ -61,7 +60,6 @@ class Xendit {
 
     try {
       final result = await _channel.invokeMethod('createSingleToken', params);
-
       return TokenResult(token: Token.from(result));
     } on PlatformException catch (e) {
       return TokenResult(
@@ -69,38 +67,6 @@ class Xendit {
         errorMessage: e.message ?? '',
       );
     }
-  }
-
-  Future<void> fakeCreateSingleUseToken(
-    XCard card, {
-    required int amount,
-    required String currency,
-    bool shouldAuthenticate = true,
-    String onBehalfOf = '',
-    BillingDetails? billingDetails,
-    Customer? customer,
-  }) async {
-    var params = <String, dynamic>{
-      'publishedKey': publishedKey,
-      'card': card.to(),
-      'amount': amount,
-      'shouldAuthenticate': shouldAuthenticate,
-      'onBehalfOf': onBehalfOf,
-      'currency': currency,
-    };
-
-    if (billingDetails != null) {
-      params['billingDetails'] = billingDetails.to();
-    }
-
-    if (customer != null) {
-      params['customer'] = customer.to();
-    }
-
-    var result = await _channel.invokeMethod('createSingleToken', params);
-
-    debugPrint(result.toString());
-    return result;
   }
 
   /// Creates a multiple-use token.
@@ -147,35 +113,6 @@ class Xendit {
     }
   }
 
-  Future<void> fakeCreateMultipleUseToken(
-    XCard card, {
-    required int amount,
-    String currency = 'IDR',
-    bool shouldAuthenticate = true,
-    String onBehalfOf = '',
-    BillingDetails? billingDetails,
-    Customer? customer,
-  }) async {
-    var params = <String, dynamic>{
-      'publishedKey': publishedKey,
-      'card': card.to(),
-      'amount': amount,
-      'shouldAuthenticate': shouldAuthenticate,
-      'onBehalfOf': onBehalfOf,
-      'currency': currency,
-    };
-
-    if (billingDetails != null) {
-      params['billingDetails'] = billingDetails.to();
-    }
-
-    if (customer != null) {
-      params['customer'] = customer.to();
-    }
-    final result = await _channel.invokeMethod('createMultiToken', params);
-    debugPrint(result.toString());
-  }
-
   /// Creates a 3DS authentication for a multiple-use token
   ///
   /// @param tokenId The id of a multiple-use token
@@ -207,23 +144,5 @@ class Xendit {
         errorMessage: e.message ?? '',
       );
     }
-  }
-
-  Future<void> fakeCreateAuthentication(
-    String tokenId, {
-    required int amount,
-    String currency = 'IDR',
-    String? creditCardCVN,
-  }) async {
-    final params = <String, dynamic>{
-      'publishedKey': publishedKey,
-      'tokenId': tokenId,
-      'amount': amount,
-      'currency': currency,
-      'creditCardCVN': creditCardCVN ?? '',
-    };
-
-    final result = await _channel.invokeMethod('createAuthentication', params);
-    debugPrint(result.toString());
   }
 }
