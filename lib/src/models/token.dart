@@ -24,7 +24,7 @@ class Token {
   final bool should3ds;
 
   /// Card Info
-  final CardInfo cardInfo;
+  final CardInfo? cardInfo;
 
   Token({
     required this.id,

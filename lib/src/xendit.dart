@@ -47,6 +47,7 @@ class Xendit {
       'amount': amount,
       'shouldAuthenticate': shouldAuthenticate,
       'onBehalfOf': onBehalfOf,
+      'currency': currency,
     };
 
     if (billingDetails != null) {
@@ -55,10 +56,6 @@ class Xendit {
 
     if (customer != null) {
       params['customer'] = customer.to();
-    }
-
-    if (currency != null) {
-      params['currency'] = currency;
     }
 
     try {
@@ -87,6 +84,7 @@ class Xendit {
       'amount': amount,
       'shouldAuthenticate': shouldAuthenticate,
       'onBehalfOf': onBehalfOf,
+      'currency': currency,
     };
 
     if (billingDetails != null) {
@@ -95,10 +93,6 @@ class Xendit {
 
     if (customer != null) {
       params['customer'] = customer.to();
-    }
-
-    if (currency != null) {
-      params['currency'] = currency;
     }
 
     var result = await _channel.invokeMethod('createSingleToken', params);
@@ -155,17 +149,16 @@ class Xendit {
   Future<AuthenticationResult> createAuthentication(
     String tokenId, {
     required int amount,
-    String? currency,
+    String currency = 'IDR',
+    String? creditCardCVN,
   }) async {
     var params = <String, dynamic>{
       'publishedKey': publishedKey,
       'tokenId': tokenId,
       'amount': amount,
+      'currency': currency,
+      'creditCardCVN': creditCardCVN ?? '',
     };
-
-    if (currency != null) {
-      params['currency'] = currency;
-    }
 
     try {
       var result = await _channel.invokeMethod('createAuthentication', params);
@@ -176,5 +169,23 @@ class Xendit {
         errorMessage: e.message ?? '',
       );
     }
+  }
+
+  Future<void> fakeCreateAuthentication(
+    String tokenId, {
+    required int amount,
+    String currency = 'IDR',
+    String? creditCardCVN,
+  }) async {
+    final params = <String, dynamic>{
+      'publishedKey': publishedKey,
+      'tokenId': tokenId,
+      'amount': amount,
+      'currency': currency,
+      'creditCardCVN': creditCardCVN ?? '',
+    };
+
+    final result = await _channel.invokeMethod('createAuthentication', params);
+    print(result);
   }
 }

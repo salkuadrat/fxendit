@@ -29,12 +29,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future _testSingleUseToken() async {
+  Future<void> _testSingleUseToken() async {
     XCard card = XCard(
       creditCardNumber: '4111111111111111',
       creditCardCVN: '123',
       expirationMonth: '09',
-      expirationYear: '2021',
+      expirationYear: '2022',
     );
 
     await xendit.fakeCreateSingleUseToken(
@@ -46,12 +46,12 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future _testMultipleUseToken() async {
+  Future<void> _testMultipleUseToken() async {
     XCard card = XCard(
-      creditCardNumber: '4111111111111111',
+      creditCardNumber: '4000000000000051',
       creditCardCVN: '123',
-      expirationMonth: '09',
-      expirationYear: '2021',
+      expirationMonth: '05',
+      expirationYear: '2022',
     );
 
     TokenResult result = await xendit.createMultipleUseToken(card);
@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future _testAuthentication() async {
+  Future<void> _testAuthentication() async {
     if (tokenId.isNotEmpty) {
       AuthenticationResult result =
           await xendit.createAuthentication(tokenId, amount: 50000);

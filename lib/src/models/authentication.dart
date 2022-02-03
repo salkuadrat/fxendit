@@ -18,7 +18,7 @@ class Authentication {
   final String maskedCardNumber;
 
   /// Card Info
-  final CardInfo cardInfo;
+  final CardInfo? cardInfo;
 
   /// Request Payload
   final String? requestPayload;
@@ -44,7 +44,8 @@ class Authentication {
         payerAuthenticationUrl = json['payerAuthenticationUrl'],
         status = json['status'],
         maskedCardNumber = json['maskedCardNumber'],
-        cardInfo = CardInfo.from(json['cardInfo']),
+        cardInfo =
+            json['cardInfo'] != null ? CardInfo.from(json['cardInfo']) : null,
         requestPayload = json['requestPayload'],
         authenticationTransactionId = json['authenticationTransactionId'];
 }

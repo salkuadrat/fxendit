@@ -89,7 +89,7 @@ public class FxenditPlugin implements FlutterPlugin, MethodCallHandler, Activity
                 billingDetails, customer, currency, new TokenCallback() {
                     @Override
                     public void onSuccess(Token token) {
-                        result.success(tokenToMap(token));
+                        result.success(token.getId());
                     }
 
                     @Override
