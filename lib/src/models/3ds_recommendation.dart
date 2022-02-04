@@ -12,9 +12,10 @@ class ThreeDSRecommendation {
   });
 
   /// Convert Map to ThreeDSRecommendation
-  ThreeDSRecommendation.from(Map json)
-      : should3ds = json['should3ds'] as bool,
-        tokenId = json['tokenId'];
+  factory ThreeDSRecommendation.from(Map json) => ThreeDSRecommendation(
+        should3ds: json['should3ds'] as bool,
+        tokenId: json['tokenId'],
+      );
 
   @override
   String toString() {

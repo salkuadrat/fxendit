@@ -6,7 +6,7 @@ class Authentication {
   final String id;
 
   /// Credit Card Token ID
-  final String creditCardTokenId;
+  final String? creditCardTokenId;
 
   /// Authentication URL
   final String? payerAuthenticationUrl;
@@ -15,10 +15,10 @@ class Authentication {
   final String status;
 
   /// Masked Card Number
-  final String maskedCardNumber;
+  final String? maskedCardNumber;
 
   /// Card Info
-  final CardInfo cardInfo;
+  final CardInfo? cardInfo;
 
   /// Request Payload
   final String? requestPayload;
@@ -26,25 +26,27 @@ class Authentication {
   /// Authentication Transaction ID
   final String? authenticationTransactionId;
 
-  Authentication({
+  const Authentication({
     required this.id,
-    required this.creditCardTokenId,
-    this.payerAuthenticationUrl,
     required this.status,
-    required this.maskedCardNumber,
-    required this.cardInfo,
+    this.creditCardTokenId,
+    this.payerAuthenticationUrl,
+    this.maskedCardNumber,
+    this.cardInfo,
     this.requestPayload,
     this.authenticationTransactionId,
   });
 
   /// Convert Map to Authentication
-  Authentication.from(Map json)
-      : id = json['id'],
-        creditCardTokenId = json['creditCardTokenId'],
-        payerAuthenticationUrl = json['payerAuthenticationUrl'],
-        status = json['status'],
-        maskedCardNumber = json['maskedCardNumber'],
-        cardInfo = CardInfo.from(json['cardInfo']),
-        requestPayload = json['requestPayload'],
-        authenticationTransactionId = json['authenticationTransactionId'];
+  factory Authentication.from(Map json) => Authentication(
+        id: json['id'],
+        creditCardTokenId: json['creditCardTokenId'],
+        payerAuthenticationUrl: json['payerAuthenticationUrl'],
+        status: json['status'],
+        maskedCardNumber: json['maskedCardNumber'],
+        cardInfo:
+            json['cardInfo'] != null ? CardInfo.from(json['cardInfo']) : null,
+        requestPayload: json['requestPayload'],
+        authenticationTransactionId: json['authenticationTransactionId'],
+      );
 }

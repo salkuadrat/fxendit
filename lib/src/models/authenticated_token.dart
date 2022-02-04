@@ -9,36 +9,36 @@ class AuthenticatedToken {
   final String status;
 
   /// Authentication ID
-  final String authenticationId;
+  final String? authenticationId;
 
   /// Authentication URL
-  final String payerAuthenticationUrl;
+  final String? payerAuthenticationUrl;
 
   /// Masked Card Number
-  final String maskedCardNumber;
+  final String? maskedCardNumber;
 
   /// Card Info
-  final CardInfo cardInfo;
+  final CardInfo? cardInfo;
 
   /// JWT
-  final String jwt;
+  final String? jwt;
 
   /// 3DS version
-  final String threedsVersion;
+  final String? threedsVersion;
 
   /// Environment
-  final String environment;
+  final String? environment;
 
-  AuthenticatedToken({
+  const AuthenticatedToken({
     required this.id,
     required this.status,
-    required this.authenticationId,
-    required this.payerAuthenticationUrl,
-    required this.maskedCardNumber,
-    required this.cardInfo,
-    required this.jwt,
-    required this.threedsVersion,
-    required this.environment,
+    this.authenticationId,
+    this.payerAuthenticationUrl,
+    this.maskedCardNumber,
+    this.cardInfo,
+    this.jwt,
+    this.threedsVersion,
+    this.environment,
   });
 
   @override
@@ -47,14 +47,16 @@ class AuthenticatedToken {
   }
 
   /// Convert Map to AuthenticatedToken
-  AuthenticatedToken.from(Map json)
-      : id = json['id'],
-        status = json['status'],
-        authenticationId = json['authenticationId'],
-        payerAuthenticationUrl = json['payerAuthenticationUrl'],
-        maskedCardNumber = json['maskedCardNumber'],
-        cardInfo = CardInfo.from(json['cardInfo']),
-        jwt = json['jwt'],
-        threedsVersion = json['threedsVersion'],
-        environment = json['environment'];
+  factory AuthenticatedToken.from(Map json) => AuthenticatedToken(
+        id: json['id'],
+        status: json['status'],
+        authenticationId: json['authenticationId'],
+        payerAuthenticationUrl: json['payerAuthenticationUrl'],
+        maskedCardNumber: json['maskedCardNumber'],
+        cardInfo:
+            json['cardInfo'] != null ? CardInfo.from(json['cardInfo']) : null,
+        jwt: json['jwt'],
+        threedsVersion: json['threedsVersion'],
+        environment: json['environment'],
+      );
 }

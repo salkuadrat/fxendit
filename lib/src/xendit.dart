@@ -8,10 +8,10 @@ import 'models/token.dart';
 import 'results/authentication_result.dart';
 import 'results/token_result.dart';
 
+const MethodChannel _channel = MethodChannel('fxendit');
+
 /// Class to use Xendit functionality in Flutter
 class Xendit {
-  final MethodChannel _channel = MethodChannel('fxendit');
-
   /// Xendit publishedKey
   /// https://dashboard.xendit.co/settings/developers#api-keys
   final String publishedKey;
@@ -35,11 +35,11 @@ class Xendit {
   Future<TokenResult> createSingleUseToken(
     XCard card, {
     required int amount,
+    String currency = 'IDR',
     bool shouldAuthenticate = true,
     String onBehalfOf = '',
     BillingDetails? billingDetails,
     Customer? customer,
-    String? currency,
   }) async {
     var params = <String, dynamic>{
       'publishedKey': publishedKey,
@@ -47,6 +47,7 @@ class Xendit {
       'amount': amount,
       'shouldAuthenticate': shouldAuthenticate,
       'onBehalfOf': onBehalfOf,
+      'currency': currency,
     };
 
     if (billingDetails != null) {
@@ -57,12 +58,8 @@ class Xendit {
       params['customer'] = customer.to();
     }
 
-    if (currency != null) {
-      params['currency'] = currency;
-    }
-
     try {
-      var result = await _channel.invokeMethod('createSingleToken', params);
+      final result = await _channel.invokeMethod('createSingleToken', params);
       return TokenResult(token: Token.from(result));
     } on PlatformException catch (e) {
       return TokenResult(
@@ -81,6 +78,9 @@ class Xendit {
   /// @param customer Customer linked to the payment method
   Future<TokenResult> createMultipleUseToken(
     XCard card, {
+    required int amount,
+    String currency = 'IDR',
+    bool shouldAuthenticate = true,
     String onBehalfOf = '',
     BillingDetails? billingDetails,
     Customer? customer,
@@ -88,7 +88,10 @@ class Xendit {
     var params = <String, dynamic>{
       'publishedKey': publishedKey,
       'card': card.to(),
+      'amount': amount,
+      'shouldAuthenticate': shouldAuthenticate,
       'onBehalfOf': onBehalfOf,
+      'currency': currency,
     };
 
     if (billingDetails != null) {
@@ -120,20 +123,21 @@ class Xendit {
   Future<AuthenticationResult> createAuthentication(
     String tokenId, {
     required int amount,
-    String? currency,
+    String currency = 'IDR',
+    String? creditCardCVN,
   }) async {
-    var params = <String, dynamic>{
+    final params = <String, dynamic>{
       'publishedKey': publishedKey,
       'tokenId': tokenId,
       'amount': amount,
+      'currency': currency,
+      'creditCardCVN': creditCardCVN ?? '',
     };
 
-    if (currency != null) {
-      params['currency'] = currency;
-    }
-
     try {
-      var result = await _channel.invokeMethod('createAuthentication', params);
+      final result =
+          await _channel.invokeMethod('createAuthentication', params);
+
       return AuthenticationResult(authentication: Authentication.from(result));
     } on PlatformException catch (e) {
       return AuthenticationResult(

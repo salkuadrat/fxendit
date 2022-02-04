@@ -199,6 +199,7 @@ public class FxenditPlugin implements FlutterPlugin, MethodCallHandler, Activity
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     private Customer customerFrom(@NonNull MethodCall call) {
         if (call.hasArgument("customer")) {
             Customer customer = new Customer();
@@ -248,52 +249,82 @@ public class FxenditPlugin implements FlutterPlugin, MethodCallHandler, Activity
 
     private Map<String, Object> authenticationToMap(Authentication authentication) {
         Map<String, Object> result = new HashMap<>();
-        result.put("id", authentication.getId());
-        result.put("creditCardTokenId", authentication.getCreditCardTokenId());
-        result.put("payerAuthenticationUrl", authentication.getPayerAuthenticationUrl());
-        result.put("status", authentication.getStatus());
-        result.put("maskedCardNumber", authentication.getMaskedCardNumber());
-        result.put("requestPayload", authentication.getRequestPayload());
-        result.put("authenticationTransactionId", authentication.getAuthenticationTransactionId());
-        result.put("cardInfo", cardInfoToMap(authentication.getCardInfo()));
+        if(authentication.getId() != null)
+            result.put("id", authentication.getId());
+        if(authentication.getCreditCardTokenId() != null)
+            result.put("creditCardTokenId", authentication.getCreditCardTokenId());
+        if(authentication.getPayerAuthenticationUrl() != null)
+            result.put("payerAuthenticationUrl", authentication.getPayerAuthenticationUrl());
+        if(authentication.getStatus() != null)
+            result.put("status", authentication.getStatus());
+        if(authentication.getMaskedCardNumber() != null)
+            result.put("maskedCardNumber", authentication.getMaskedCardNumber());
+        if(authentication.getRequestPayload() != null)
+            result.put("requestPayload", authentication.getRequestPayload());
+        if(authentication.getAuthenticationTransactionId() != null)
+            result.put("authenticationTransactionId", authentication.getAuthenticationTransactionId());
+        if(authentication.getCardInfo() != null)
+            result.put("cardInfo", cardInfoToMap(authentication.getCardInfo()));
         return result;
     }
 
     @SuppressWarnings("deprecation")
     private Map<String, Object> tokenToMap(Token token) {
         Map<String, Object> result = new HashMap<>();
-        result.put("id", token.getId());
-        result.put("status", token.getStatus());
-        result.put("authenticationId", token.getAuthenticationId());
-        result.put("maskedCardNumber", token.getMaskedCardNumber());
-        result.put("should3ds", token.getShould_3DS());
-        result.put("authentication", authenticatedTokenToMap(token.getAuthentication()));
-        result.put("cardInfo", cardInfoToMap(token.getCardInfo()));
+        if(token.getId() != null)
+            result.put("id", token.getId());
+        if(token.getStatus() != null)
+            result.put("status", token.getStatus());
+        if(token.getAuthenticationId() != null)
+            result.put("authenticationId", token.getAuthenticationId());
+        if(token.getMaskedCardNumber() != null)
+            result.put("maskedCardNumber", token.getMaskedCardNumber());
+        if(token.getShould_3DS() != null)
+            result.put("should3ds", token.getShould_3DS());
+        if(token.getAuthentication() != null)
+            result.put("authentication", authenticatedTokenToMap(token.getAuthentication()));
+        if(token.getCardInfo() != null)
+            result.put("cardInfo", cardInfoToMap(token.getCardInfo()));
         return result;
     }
 
     private Map<String, Object> authenticatedTokenToMap(AuthenticatedToken authenticatedToken) {
         Map<String, Object> result = new HashMap<>();
-        result.put("id", authenticatedToken.getId());
-        result.put("status", authenticatedToken.getStatus());
-        result.put("authenticationId", authenticatedToken.getAuthenticationId());
-        result.put("payerAuthenticationUrl", authenticatedToken.getPayerAuthenticationUrl());
-        result.put("maskedCardNumber", authenticatedToken.getMaskedCardNumber());
-        result.put("jwt", authenticatedToken.getJwt());
-        result.put("threedsVersion", authenticatedToken.getThreedsVersion());
-        result.put("environment", authenticatedToken.getEnvironment());
-        result.put("cardInfo", cardInfoToMap(authenticatedToken.getCardInfo()));
+        if(authenticatedToken.getId() != null)
+            result.put("id", authenticatedToken.getId());
+        if(authenticatedToken.getStatus() != null)
+            result.put("status", authenticatedToken.getStatus());
+        if(authenticatedToken.getAuthenticationId() != null)
+            result.put("authenticationId", authenticatedToken.getAuthenticationId());
+        if(authenticatedToken.getPayerAuthenticationUrl() != null)
+            result.put("payerAuthenticationUrl", authenticatedToken.getPayerAuthenticationUrl());
+        if(authenticatedToken.getMaskedCardNumber() != null)
+            result.put("maskedCardNumber", authenticatedToken.getMaskedCardNumber());
+        if(authenticatedToken.getJwt() != null)
+            result.put("jwt", authenticatedToken.getJwt());
+        if(authenticatedToken.getThreedsVersion() != null)
+            result.put("threedsVersion", authenticatedToken.getThreedsVersion());
+        if(authenticatedToken.getEnvironment() != null)
+            result.put("environment", authenticatedToken.getEnvironment());
+        if(authenticatedToken.getCardInfo() != null)
+            result.put("cardInfo", cardInfoToMap(authenticatedToken.getCardInfo()));
         return result;
     }
 
     private Map<String, Object> cardInfoToMap(CardInfo cardInfo) {
         Map<String, Object> result = new HashMap<>();
-        result.put("bank", cardInfo.getBank());
-        result.put("country", cardInfo.getCountry());
-        result.put("type", cardInfo.getType());
-        result.put("brand", cardInfo.getBrand());
-        result.put("cardArtUrl", cardInfo.getCardArtUrl());
-        result.put("fingerprint", cardInfo.getFingerprint());
+        if(cardInfo.getBank() != null)
+            result.put("bank", cardInfo.getBank());
+        if(cardInfo.getCountry() != null)
+            result.put("country", cardInfo.getCountry());
+        if(cardInfo.getType() != null)
+            result.put("type", cardInfo.getType());
+        if(cardInfo.getBrand() != null)
+            result.put("brand", cardInfo.getBrand());
+        if(cardInfo.getCardArtUrl() != null)
+            result.put("cardArtUrl", cardInfo.getCardArtUrl());
+        if(cardInfo.getFingerprint() != null)
+            result.put("fingerprint", cardInfo.getFingerprint());
         return result;
     }
 

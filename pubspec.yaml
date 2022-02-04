@@ -14,13 +14,17 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.4
 
 flutter:
   plugin:
     platforms:
       android:
         package: com.xendit.fxendit
+        pluginClass: FxenditPlugin
+      ios:
         pluginClass: FxenditPlugin
